@@ -1,7 +1,3 @@
-# Author: Abdullah Bakhach, 2013
-# ported c# code from http://www.codeproject.com/Articles/14692/Number-to-Arabic-text-by-27-digits-before-point-an
-# released under the MIT license
-
 class NumberToText
 
   def self.get_ala7ad(num_under2)
@@ -201,7 +197,7 @@ class NumberToText
       f1 = f3 + " و " + f1
     end
 
-    if num3 != 0 && num2 == 0 && num_und2 == 0
+    if num3 != 0 && num2 == 0 && num_under2 == 0
       f1 = f3
     end
 
@@ -233,13 +229,15 @@ class NumberToText
   def self.call_3digits(str_type, str_number, return_value)
     value = ""
 
+    Rails.logger.info(":: this is str_number[0] #{str_number[0]}")
+
     if str_number[0].length > 0
       if str_number[0].length < 3
         str_number[0] = "000" + str_number[0]
-        str_number[0] = str_number[0][str_number.length-3,3]
+        str_number[0] = str_number[0][str_number[0].length-3,3]
       end
 
-      value = NumberToText.get_3digits(str_number[0][str_number.length-3,3])
+      value = NumberToText.get_3digits(str_number[0][str_number[0].length-3,3])
       if value!= "صفر"
         value = value + str_type
       else
@@ -258,19 +256,19 @@ class NumberToText
        return_value[0] = value
       end
 
-      str_number[0] = str_number[0][0, str_number.length-3]
+      str_number[0] = str_number[0][0, str_number[0].length-3]
     end
   end
 
   def self.convert(str_number)
-    str_thousand = "ألف"
-    str_million = "مليون"
-    str_milyar = "مليار"
-    str_billion = "بليون"
-    str_thousand_billion = "ألف بليون"
-    str_million_billion = "مليون بليون"
-    str_milyar_billion = "مليار بليون"
-    str_billion_billion = "بليون بليون"
+    str_thousand = " ألف "
+    str_million = " مليون "
+    str_milyar = " مليار "
+    str_billion = " بليون "
+    str_thousand_billion = " ألف بليون "
+    str_million_billion = " مليون بليون "
+    str_milyar_billion = " مليار بليون "
+    str_billion_billion = " بليون بليون "
 
     return_value = ""
 
@@ -315,6 +313,7 @@ class NumberToText
     return_value = ""       # String
     str_before_point = ""   # String
     int_index = 0           # int
+
 
 
       number = str_number.to_f
